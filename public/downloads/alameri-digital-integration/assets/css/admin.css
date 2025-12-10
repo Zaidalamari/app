@@ -1,0 +1,76 @@
+/* Alameri Digital Integration - Admin Styles */
+.alameri-admin-wrap {
+    direction: rtl;
+}
+
+.alameri-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.alameri-stat-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.alameri-stat-card h3 {
+    margin: 0 0 10px;
+    color: #666;
+    font-size: 14px;
+}
+
+.alameri-stat-card .value {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+}
+
+.alameri-stat-card.success .value {
+    color: #10b981;
+}
+
+.alameri-stat-card.warning .value {
+    color: #f59e0b;
+}
+
+.alameri-stat-card.danger .value {
+    color: #ef4444;
+}
+
+.status-completed {
+    color: #10b981;
+    background: #d1fae5;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.status-pending {
+    color: #f59e0b;
+    background: #fef3c7;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.status-failed {
+    color: #ef4444;
+    background: #fee2e2;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.import-to-woo {
+    background: #7c3aed !important;
+    color: #fff !important;
+    border: none !important;
+}
+
+.import-to-woo:hover {
+    background: #6d28d9 !important;
+}
