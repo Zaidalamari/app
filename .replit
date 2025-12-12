@@ -1,0 +1,48 @@
+entrypoint = "index.js"
+modules = ["nodejs-22", "postgresql-16"]
+hidden = [".config", "package-lock.json"]
+
+[gitHubImport]
+requiredFiles = [".replit", "replit.nix", "package.json", "package-lock.json"]
+
+[nix]
+channel = "stable-24_11"
+packages = ["zip"]
+
+[deployment]
+run = ["node", "server/index.js"]
+deploymentTarget = "autoscale"
+ignorePorts = false
+build = ["bash", "-c", "cd client && npm run build"]
+
+[agent]
+expertMode = true
+integrations = ["javascript_openai_ai_integrations:1.0.0"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "DigiCards Platform"
+
+[[workflows.workflow]]
+name = "DigiCards Platform"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node server/index.js"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
