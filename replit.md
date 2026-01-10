@@ -1,5 +1,13 @@
 # Alameri Digital Platform - منصة العامري الرقمية
 
+## 🚀 IMPORTANT: Backend Migrated to Go
+
+**The backend has been migrated from Node.js to Go!** 
+- The Node.js server (server/index.js) is kept for reference
+- The new Go backend is in the root directory (main.go and related files)
+- See `GO_MIGRATION.md` for technical details
+- See `MIGRATION_SUMMARY.md` for overview
+
 ## Overview
 منصة متكاملة لإعادة بيع البطاقات الرقمية مع نظام API للموزعين ومحفظة إلكترونية.
 
@@ -11,24 +19,25 @@
 ## Project Structure
 ```
 /
-├── server/                 # Backend Express.js
-│   ├── index.js           # Main server file
-│   ├── config/
-│   │   └── database.js    # PostgreSQL connection
-│   ├── middleware/
-│   │   └── auth.js        # JWT & API key authentication
-│   └── routes/
-│       ├── auth.js        # Authentication routes
-│       ├── products.js    # Products management
-│       ├── orders.js      # Orders & purchases
-│       ├── wallet.js      # Wallet operations
-│       ├── api.js         # External API for distributors
-│       ├── admin.js       # Admin dashboard
-│       ├── chat.js        # AI chatbot (OpenAI)
-│       ├── payment.js     # Saudi payment gateways
-│       ├── marketing.js   # Banners, promotions, notifications
-│       ├── currencies.js  # Multi-currency & country markets
-│       └── smmprovider.js # SMM Panel providers integration
+├── main.go                 # Go backend entry point ⭐ NEW
+├── config/                 # Go backend configuration ⭐ NEW
+│   ├── database.go        # PostgreSQL connection
+│   └── jwt.go             # JWT configuration
+├── middleware/             # Go middleware ⭐ NEW
+│   ├── auth.go            # JWT & API key authentication
+│   └── cache.go           # Cache control
+├── routes/                 # Go API routes ⭐ NEW
+│   ├── auth.go            # Authentication routes
+│   ├── products.go        # Products management
+│   ├── orders.go          # Orders & purchases
+│   └── wallet.go          # Wallet operations
+├── models/                 # Go data models ⭐ NEW
+│   └── models.go
+├── utils/                  # Go utilities ⭐ NEW
+│   └── response.go
+├── server/                 # Legacy Node.js backend (for reference)
+│   ├── index.js           # Old Node.js server
+│   └── ...
 ├── client/                 # Frontend React + Vite
 │   ├── src/
 │   │   ├── pages/         # React pages
@@ -52,7 +61,24 @@
 ```
 
 ## Running the Project
-- Development: `node server/index.js` (runs on port 5000)
+
+### Go Backend (Current)
+```bash
+# Build
+make build
+# or
+go build -o bin/server main.go
+
+# Run
+make run
+# or
+./bin/server
+# or
+go run main.go
+```
+
+### Legacy Node.js Backend (For Reference Only)
+- Development: `npm run start:node` (runs on port 5000)
 - Build frontend: `cd client && npm run build`
 
 ## Database
@@ -99,24 +125,44 @@ Headers required: X-API-Key, X-API-Secret
 - GET /api/marketing/notifications
 
 ## Tech Stack
-- Backend: Express.js 5, PostgreSQL, JWT, bcryptjs, OpenAI
-- Frontend: React 18, Vite, Tailwind CSS 4, React Router
+
+### Backend (NEW - Go)
+- **Language**: Go 1.24
+- **Router**: Gorilla Mux
+- **Database**: PostgreSQL with lib/pq driver
+- **Authentication**: JWT (golang-jwt/jwt)
+- **Password Hashing**: bcrypt (golang.org/x/crypto)
+- **CORS**: rs/cors
+- **Benefits**: Native performance, type safety, efficient concurrency
+
+### Backend (Legacy - Node.js - For Reference)
+- Express.js 5, PostgreSQL, JWT, bcryptjs, OpenAI
+
+### Frontend
+- React 18, Vite, Tailwind CSS 4, React Router
 - Language: RTL Arabic interface
 
 ## Features
-1. **Wallet System** - Balance management with transaction history
-2. **API for Distributors** - Full API with authentication
-3. **Saudi Payment Gateways** - MyFatoorah, Telr, Moyasar, HyperPay (simulation mode)
-4. **AI Chatbot** - OpenAI-powered support bot
-5. **Marketing System** - Banners, promo codes, notifications
-6. **Multi-Currency System** - Support for SAR, AED, KWD, BHD, QAR, OMR, EGP, USD, EUR
-7. **Country Markets** - Separate markets for SA, AE, KW, BH, QA, OM, EG with local pricing
-8. **SMM Panel Integration** - Import services from SMM panels as products
-9. **Referral System** - Commission-based referral program with withdraw to wallet
-10. **Marketing Center** - Ad campaign management with Meta/Google/TikTok/Snapchat/Twitter integration
-11. **External Supplier Integration** - IPTV ActiveCode panel API integration for auto-fulfillment
-12. **Multi-Channel Notifications** - WhatsApp, SMS, Email notifications for order confirmations
-13. **WordPress Plugin** - WooCommerce integration plugin for distributors
+
+### Currently Implemented in Go Backend ✅
+1. **User Authentication** - Registration, login, JWT tokens, API keys
+2. **Product Management** - Categories, product listing, filtering, search
+3. **Order Processing** - Create orders, transaction support, inventory management
+4. **Wallet System** - Balance management, transaction history, admin operations
+5. **Security** - Password hashing, SQL injection prevention, role-based access
+
+### Available in Legacy Node.js Backend (To Be Migrated)
+6. **Saudi Payment Gateways** - MyFatoorah, Telr, Moyasar, HyperPay (simulation mode)
+7. **AI Chatbot** - OpenAI-powered support bot
+8. **Marketing System** - Banners, promo codes, notifications
+9. **Multi-Currency System** - Support for SAR, AED, KWD, BHD, QAR, OMR, EGP, USD, EUR
+10. **Country Markets** - Separate markets for SA, AE, KW, BH, QA, OM, EG with local pricing
+11. **SMM Panel Integration** - Import services from SMM panels as products
+12. **Referral System** - Commission-based referral program with withdraw to wallet
+13. **Marketing Center** - Ad campaign management with Meta/Google/TikTok/Snapchat/Twitter integration
+14. **External Supplier Integration** - IPTV ActiveCode panel API integration for auto-fulfillment
+15. **Multi-Channel Notifications** - WhatsApp, SMS, Email notifications for order confirmations
+16. **WordPress Plugin** - WooCommerce integration plugin for distributors
 
 ## User Preferences
 - Arabic RTL interface
@@ -135,6 +181,11 @@ Headers required: X-API-Key, X-API-Secret
 - Dec 2024: Added external supplier panel integration (IPTV ActiveCode) with auto-fulfillment
 - Dec 2024: Added multi-channel notifications (WhatsApp, SMS, Email) for order confirmations
 - Dec 2024: Added WordPress/WooCommerce plugin for distributor store integration
+- **Jan 2025: Migrated backend from Node.js to Go** ⭐
+  - Improved performance and type safety
+  - Core APIs (auth, products, orders, wallet) implemented
+  - Maintained 100% backward compatibility with frontend
+  - See `GO_MIGRATION.md` for details
 
 ## Product Management (Admin)
 - `GET /api/admin/products` - List all products with code counts
