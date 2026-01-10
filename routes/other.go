@@ -4,20 +4,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// RegisterOrderRoutes registers order routes
-func RegisterOrderRoutes(router *mux.Router) {
-	// TODO: Implement order routes
-	// router.HandleFunc("/api/orders", getOrdersHandler).Methods("GET")
-	// router.HandleFunc("/api/orders", createOrderHandler).Methods("POST")
-}
-
-// RegisterWalletRoutes registers wallet routes
-func RegisterWalletRoutes(router *mux.Router) {
-	// TODO: Implement wallet routes
-	// router.HandleFunc("/api/wallet", getWalletHandler).Methods("GET")
-	// router.HandleFunc("/api/wallet/transactions", getTransactionsHandler).Methods("GET")
-}
-
 // RegisterAPIRoutes registers external API routes
 func RegisterAPIRoutes(router *mux.Router) {
 	// TODO: Implement API routes for distributors
