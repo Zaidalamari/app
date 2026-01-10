@@ -3,6 +3,7 @@ package routes
 import (
 	"database/sql"
 	"net/http"
+	"strconv"
 
 	"github.com/Zaidalamari/app/config"
 	"github.com/Zaidalamari/app/utils"
@@ -70,13 +71,13 @@ func getProductsHandler(w http.ResponseWriter, r *http.Request) {
 	argIndex := 1
 
 	if categoryID != "" {
-		query += " AND p.category_id = $" + string(rune(argIndex+'0'))
+		query += " AND p.category_id = $" + strconv.Itoa(argIndex)
 		args = append(args, categoryID)
 		argIndex++
 	}
 
 	if search != "" {
-		query += " AND (p.name ILIKE $" + string(rune(argIndex+'0')) + " OR p.name_ar ILIKE $" + string(rune(argIndex+'0')) + ")"
+		query += " AND (p.name ILIKE $" + strconv.Itoa(argIndex) + " OR p.name_ar ILIKE $" + strconv.Itoa(argIndex) + ")"
 		args = append(args, "%"+search+"%")
 	}
 

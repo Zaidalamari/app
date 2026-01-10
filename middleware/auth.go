@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"encoding/json"
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/Zaidalamari/app/config"
@@ -16,16 +15,6 @@ import (
 type contextKey string
 
 const UserContextKey contextKey = "user"
-
-var jwtSecret = []byte(getJWTSecret())
-
-func getJWTSecret() string {
-	secret := os.Getenv("JWT_SECRET")
-	if secret == "" {
-		secret = "digicards-secret-key-2024"
-	}
-	return secret
-}
 
 // AuthenticateToken middleware validates JWT tokens
 func AuthenticateToken(next http.Handler) http.Handler {
@@ -49,7 +38,7 @@ func AuthenticateToken(next http.Handler) http.Handler {
 		}
 
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-			return jwtSecret, nil
+			return config.GetJWTSecret(), nil
 		})
 
 		if err != nil || !token.Valid {

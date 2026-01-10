@@ -106,7 +106,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 		"exp":    time.Now().Add(7 * 24 * time.Hour).Unix(),
 	})
 
-	tokenString, err := token.SignedString(getJWTSecret())
+	tokenString, err := token.SignedString(config.GetJWTSecret())
 	if err != nil {
 		utils.RespondError(w, http.StatusInternalServerError, "خطأ في الخادم")
 		return
@@ -179,7 +179,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		"exp":    time.Now().Add(7 * 24 * time.Hour).Unix(),
 	})
 
-	tokenString, err := token.SignedString(getJWTSecret())
+	tokenString, err := token.SignedString(config.GetJWTSecret())
 	if err != nil {
 		utils.RespondError(w, http.StatusInternalServerError, "خطأ في الخادم")
 		return
@@ -225,11 +225,6 @@ func profileHandler(w http.ResponseWriter, r *http.Request) {
 		},
 		"balance": balance,
 	})
-}
-
-func getJWTSecret() []byte {
-	// This should match the secret in middleware/auth.go
-	return []byte("digicards-secret-key-2024")
 }
 
 func generateReferralCode() string {
