@@ -30,6 +30,13 @@ func main() {
 	// Apply cache control middleware
 	router.Use(middleware.CacheControl)
 
+	// Health check endpoint
+	router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{"status":"ok","service":"alameri-digital-api","version":"2.0.0-go"}`))
+	}).Methods("GET")
+
 	// Register routes
 	routes.RegisterAuthRoutes(router)
 	routes.RegisterProductRoutes(router)
