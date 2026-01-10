@@ -1,5 +1,5 @@
-entrypoint = "index.js"
-modules = ["nodejs-22", "postgresql-16"]
+entrypoint = "main.go"
+modules = ["go-1.23", "nodejs-22", "postgresql-16"]
 hidden = [".config", "package-lock.json"]
 
 [gitHubImport]
@@ -10,10 +10,10 @@ channel = "stable-24_11"
 packages = ["zip"]
 
 [deployment]
-run = ["node", "server/index.js"]
+run = ["./bin/server"]
 deploymentTarget = "autoscale"
 ignorePorts = false
-build = ["bash", "-c", "cd client && npm run build"]
+build = ["bash", "-c", "cd client && npm run build && cd .. && go build -o bin/server main.go"]
 
 [agent]
 expertMode = true
@@ -37,7 +37,7 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "node server/index.js"
+args = "./bin/server"
 waitForPort = 5000
 
 [workflows.workflow.metadata]
