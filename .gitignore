@@ -131,3 +131,11 @@ dist
 
 # Replit debugger
 .breakpoints
+
+# Go build artifacts
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib

@@ -1,12 +1,14 @@
 {
   "name": "digicards",
   "version": "1.0.0",
-  "description": "Digital Cards Reselling Platform",
-  "main": "server/index.js",
+  "description": "Digital Cards Reselling Platform - Go Backend",
+  "main": "main.go",
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "node server/index.js",
-    "build": "cd client && npm run build"
+    "start": "go run main.go",
+    "start:node": "node server/index.js",
+    "dev": "go run main.go",
+    "build": "cd client && npm run build && cd .. && go build -o bin/server main.go",
+    "build:client": "cd client && npm run build"
   },
   "keywords": [],
   "author": "",
